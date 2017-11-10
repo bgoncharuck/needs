@@ -59,18 +59,6 @@ void anySenToBuf(const unsigned numberOfSen, const char* text, char* buf, int si
 	return;
 }
 
-unsigned strEqual(const char* str1, const char* str2) {
-	if(sizeof(str1) != sizeof(str2))
-		return 0;
-	unsigned valid = 1;
-	while(*str1 && *str2) {
-		if(*str1 != *str2)
-			valid = 0;
-		str1++; str2++;
-	}
-	return valid;
-}
-
 int amountOfSen(const char* text) {
 	int count = 0;
 	while(*text) {
