@@ -1,3 +1,9 @@
+#define END_OF_SEN_ARR(str, ind) (str[ind] == '.'|| str[ind] == '?' || str[ind] == '!')
+#define END_OF_SEN_POIN(pointer) (*(pointer) == '.'|| *(pointer) == '?' || *(pointer) == '!')
+#define END_OF_LINE_POIN(pointer) (*(pointer) == ' ' || *(pointer) == '\n')
+#define LENGTH_ARR(arr) ( sizeof(arr)/sizeof(arr[0]) )
+
+
 enum {
 	EQUAL,
 	HOW_FAR,
