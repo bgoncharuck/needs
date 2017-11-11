@@ -36,14 +36,14 @@ void shakerSort(int arr[], long size) {
 void combSort(int arr[], long size) {
 	int swapped = 1;
 	long gap = size;
-	while (gap > 1 || swapped) {
+	while (gap != 1 || swapped) {
 		gap = gap * 10 / 13;
 		if (gap < 1)
 			gap = 1;
 		swapped = 0;
-		for (long i = 0, j = gap; j < size; i++, j++) {
-			if (arr[i] > arr[j]) {
-				swapInt(&arr[i], &arr[j]);
+		for (long i = 0; i < size - gap; i++) {
+			if (arr[i] > arr[i + gap]) {
+				swapInt(&arr[i], &arr[i + gap]);
 				swapped = 1;
 			}
 		}
