@@ -33,6 +33,23 @@ void shakerSort(int arr[], long size) {
 	} while (l < r && swapped);
 }
 
+void combSort(int arr[], long size) {
+	int swapped = 1;
+	long gap = size;
+	while (gap > 1 || swapped) {
+		gap = gap * 10 / 13;
+		if (gap < 1)
+			gap = 1;
+		swapped = 0;
+		for (long i = 0, j = gap; j < size; i++, j++) {
+			if (arr[i] > arr[j]) {
+				swapInt(&arr[i], &arr[j]);
+				swapped = 1;
+			}
+		}
+	}
+}
+
 void insertionSort(int arr[], long size) {
 	if(size < 100000)
 		for(long i = 1; i < size; i++)
