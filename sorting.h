@@ -3,19 +3,19 @@ void insertionSort(int array[], long size) {
 	long internalCount = 0;
 	long temp = 0;
 	if(size < 100000)
-		for(externalCount = 0; externalCount < size; externalCount++) {
+		for(externalCount = size; externalCount > 0; externalCount--) {
 			internalCount = externalCount;
-			while(internalCount > 0 && array[internalCount] > array[internalCount - 1]) {
+			while(internalCount < size && array[internalCount] < array[internalCount - 1]) {
 				swapInt(&array[internalCount], &array[internalCount - 1]);
-				internalCount -= 1;
+				internalCount += 1;
 			}
 		}
-	else if(size > 100000)
-		for(externalCount = 0; externalCount < size; externalCount++) {
+	else if(size >= 100000)
+		for(externalCount = 1; externalCount < size; externalCount++) {
 			temp = array[externalCount];
 			internalCount = externalCount - 1;
 			while(internalCount >= 0  && array[internalCount] > temp) {
-				array[internalCount+1] = array[internalCount];
+				array[internalCount + 1] = array[internalCount];
 				internalCount -= 1;
 			}
 			array[internalCount+1] = temp;
