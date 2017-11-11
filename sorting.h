@@ -1,3 +1,20 @@
+void combSort(int arr[], long size) {
+	int swapped = 1;
+	long gap = size;
+	while (gap != 1 || swapped) {
+		gap = gap / 1.247;
+		if (gap < 1)
+		gap = 1;
+		swapped = 0;
+		for (long i = 0; i < size - gap; i++) {
+			if (arr[i] > arr[i + gap]) {
+				swapInt(&arr[i], &arr[i + gap]);
+				swapped = 1;
+			}
+		}
+	}
+}
+
 void bubbleSort(int arr[], long size) {
 	int swapped = 1;
 	for(int i = 0; i < size - 1 && swapped; i++) {
@@ -33,20 +50,17 @@ void shakerSort(int arr[], long size) {
 	} while (l < r && swapped);
 }
 
-void combSort(int arr[], long size) {
-	int swapped = 1;
-	long gap = size;
-	while (gap != 1 || swapped) {
-		gap = gap * 10 / 13;
-		if (gap < 1)
-			gap = 1;
-		swapped = 0;
-		for (long i = 0; i < size - gap; i++) {
-			if (arr[i] > arr[i + gap]) {
-				swapInt(&arr[i], &arr[i + gap]);
-				swapped = 1;
-			}
+
+void shellSort(int arr[], long size) {
+	long h = 1;
+	while (h <= size / 3)
+		h = h * 3 + 1;
+	while (h > 0) {
+		for (int i = h; i < size; i++) {
+			for(int j = i; j > h - 1 && arr[j-h] >= arr[j]; j -= h)
+				swapInt(&arr[j-h], &arr[j]);
 		}
+	h = h / 3;
 	}
 }
 
