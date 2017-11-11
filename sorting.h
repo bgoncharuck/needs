@@ -10,6 +10,29 @@ void bubbleSort(int arr[], long size) {
 	}
 }
 
+void shakerSort(int arr[], long size) {
+	long l = 0;
+	long r = size - 1;
+	int swapped = 1;
+	do {
+		swapped = 0;
+		for (int i = l; i < r; i++) {
+			if (arr[i + 1] < arr[i]) {
+				swapInt(&arr[i], &arr[i + 1]);
+				swapped = 1;
+			}
+		}
+		r--;
+		for (int i = r; i > l; i--) {
+			if (arr[i] < arr[i - 1]) {
+				swapInt(&arr[i], &arr[i - 1]);
+				swapped = 1;
+			}
+		}
+		l++;
+	} while (l < r && swapped);
+}
+
 void insertionSort(int arr[], long size) {
 	if(size < 100000)
 		for(long i = 1; i < size; i++)
