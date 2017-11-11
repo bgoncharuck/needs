@@ -1,3 +1,10 @@
+void bubbleSort(int arr[], long size) {
+	for(int i = 0; i < size - 1; i++)
+		for(int j = 0; j < size - 1 - i; j++)
+			if(arr[j + 1] < arr[j])
+				swapInt(&arr[j+1], &arr[j]);
+}
+
 void insertionSort(int arr[], long size) {
 	if(size < 100000)
 		for(long i = 1; i < size; i++)
