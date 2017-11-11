@@ -1,8 +1,12 @@
 void bubbleSort(int arr[], long size) {
-	for(int i = 0; i < size - 1; i++)
+	for(int i = 0; i < size - 1; i++) {
+		int swapped = 0;
 		for(int j = 0; j < size - 1 - i; j++)
-			if(arr[j + 1] < arr[j])
+			if(arr[j + 1] < arr[j]) {
 				swapInt(&arr[j+1], &arr[j]);
+					swapped = 1;
+			}
+	}
 }
 
 void insertionSort(int arr[], long size) {
@@ -20,7 +24,6 @@ void insertionSort(int arr[], long size) {
 			}
 			arr[j+1] = key;
 		}
-	return;
 }
 
 void selectionSort(int arr[], long size) {
