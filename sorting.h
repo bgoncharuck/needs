@@ -1,5 +1,5 @@
 void bubbleSort(int arr[], long size) {
-	int swapped = 0;
+	int swapped = 1;
 	for(int i = 0; i < size - 1 && swapped; i++) {
 		swapped = 0;
 		for(int j = 0; j < size - 1 - i; j++)
