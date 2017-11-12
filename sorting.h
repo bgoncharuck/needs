@@ -23,7 +23,7 @@ void shakerSort(int arr[], long size) {
 
 void combSort(int arr[], long size) {
 	long gap = size;
-	while (gap != 1) {
+	while (gap > 1) {
 		gap = gap / 1.247;
 		if (gap <= 1)
 			shakerSort(arr, size);
