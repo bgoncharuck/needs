@@ -50,7 +50,8 @@ long lasInBin(int arr[], long size, int key) {
 }
 
 long interpolationSearch(int arr[], long size, int key) {
-	for(long l = 0, r = size - 1, i = (l+r)/2; l <= r; i = l + (key - arr[l]) * (r - l) / (arr[r] - arr[l]) ) {
+	for(long l = 0, r = size - 1, i = (l+r)/2; l <= r;
+	i = l + (key - arr[l]) * (r - l) / (arr[r] - arr[l]) ) {
 		if(key == arr[i])
 			return i;
 		else if (key < arr[i])
