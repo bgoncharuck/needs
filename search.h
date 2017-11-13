@@ -60,3 +60,22 @@ long interpolationSearch(int arr[], long size, int key) {
 	}
 	return -1;
 }
+
+long exponentialSearch(int arr[], long size, int key) {
+		long bound = 1;
+		while (bound < size && arr[bound] < key) {
+			bound = bound << 1;
+			if (bound < size && arr[bound] == key) {
+				return bound; 			}
+		}
+		long l = bound >> 1;
+		long r = (size >= bound) ? size : bound;
+		for(int i = (l+r)/2; l <= r; i = (l+r)/2) {
+				if(key == arr[size-1] || key < arr[i + 1] && arr[i] == key)
+					return i;
+				else if (key < arr[i])
+					r = i - 1;
+				else l = i + 1;
+			}
+		return -1;
+}
