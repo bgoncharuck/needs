@@ -3,9 +3,9 @@ void bubbleSort(int arr[], long size) {
 	for(int i = 0; i < size - 1 && swapped; i++) {
 		swapped = 0;
 		for(int j = 0; j < size - i - 1; j++)
-		if(arr[j] > arr[j+1]) {
-			swapInt(&arr[j], &arr[j+1]);
-			swapped = 1;
+			if(arr[j] > arr[j+1]) {
+				swapInt(&arr[j], &arr[j+1]);
+				swapped = 1;
 		}
 	}
 }
@@ -40,10 +40,10 @@ void combSort(int arr[], long size) {
 		swapped = 0;
 		gap = gap / 1.247;
 		if (gap < 1)
-		gap = 1;
+			gap = 1;
 		for (long i = 0; i < size - gap; i++)
-		if (arr[i] > arr[i + gap])
-		swapInt(&arr[i], &arr[i + gap]);
+			if (arr[i] > arr[i + gap])
+				swapInt(&arr[i], &arr[i + gap]);
 		swapped = 1;
 	}
 }
