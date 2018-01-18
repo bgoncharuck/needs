@@ -69,8 +69,8 @@
 	while(step <= size/3) \
 		step = step*3 + 1; \
 	while(step > 0) { \
-		for(int i = step; i < size; i++) \
-			for(int j = i; j > step - 1 && arr[j] <= arr[j-step]; j -= step) \
+		for(size_t i = step; i < size; i++) \
+			for(size_t j = i; j > step - 1 && arr[j] <= arr[j-step]; j -= step) \
 				swap(&arr[j], &arr[j-step]); \
 		step /= 3; \
 	} \
