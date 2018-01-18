@@ -4,7 +4,7 @@ void bubbleSort(int arr[], long size) {
 		swapped = 0;
 		for(int j = 0; j < size - i - 1; j++)
 			if(arr[j] > arr[j+1]) {
-				swapInt(&arr[j], &arr[j+1]);
+				swap(&arr[j], &arr[j+1]);
 				swapped = 1;
 		}
 	}
@@ -18,14 +18,14 @@ void shakerSort(int arr[], long size) {
 		swapped = 0;
 		for (int i = l; i < r; i++) {
 			if (arr[i] > arr[i + 1]) {
-				swapInt(&arr[i], &arr[i + 1]);
+				swap(&arr[i], &arr[i + 1]);
 				swapped = 1;
 			}
 		}
 		r--;
 		for (int i = r; i > l; i--) {
 			if (arr[i] < arr[i - 1]) {
-				swapInt(&arr[i], &arr[i - 1]);
+				swap(&arr[i], &arr[i - 1]);
 				swapped = 1;
 			}
 		}
@@ -43,7 +43,7 @@ void combSort(int arr[], long size) {
 			gap = 1;
 		for (long i = 0; i < size - gap; i++)
 			if (arr[i] > arr[i + gap])
-				swapInt(&arr[i], &arr[i + gap]);
+				swap(&arr[i], &arr[i + gap]);
 		swapped = 1;
 	}
 }
@@ -58,7 +58,7 @@ void selectionSort(int arr[], long size) {
 			}
 		}
 		if (i != minIndex) {
-			swapInt(&arr[i], &arr[minIndex]);
+			swap(&arr[i], &arr[minIndex]);
 		}
 	}
 }
@@ -68,7 +68,7 @@ void insertionSort(int arr[], long size) {
 	if(size < 100000)
 		for(long i = 1; i < size; i++)
 		 	for(long j = i; j > 0 && arr[j] < arr[j-1]; j--)
-				swapInt(&arr[j], &arr[j-1]);
+				swap(&arr[j], &arr[j-1]);
 	else if(size >= 100000)
 		for(long i = 1; i < size; i++) {
 			long key = arr[i];
@@ -88,7 +88,7 @@ void shellSort(int arr[], long size) {
 	while (h > 0) {
 		for (int i = h; i < size; i++)
 			for(int j = i; j > h - 1 && arr[j] <= arr[j-h]; j -= h)
-				swapInt(&arr[j-h], &arr[j]);
+				swap(&arr[j-h], &arr[j]);
 		h /= 3;
 	}
 }
