@@ -42,7 +42,13 @@ void printLine(FILE *file, long line_number) {
 	return;
 }
 
-int fileExists(const char *fileName) {
+int fileExists(const char* path) {
+	char command[PATH_MAX + 1];
+	sprintf(command, "[ -f %s ]", path);
+	return !system(command);
+}
+
+int textFileExists(const char *fileName) {
     FILE *f = fopen(fileName, "rb");
     if (!f) return 0;
     fclose(f);
@@ -59,7 +65,6 @@ long getFileSize(const char *fileName) {
 }
 
 int readFileToBuffer(const char *fileName, char *buffer, int bufferLength) {
-	memset(buffer, '\0', bufferLength);
 	FILE *f = fopen(fileName, "rb");
     if (!f) return 0;
     long readBytes = fread(buffer, 1, bufferLength, f);
