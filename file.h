@@ -1,3 +1,16 @@
+int fileExists(const char* path) {
+	char command[PATH_MAX + 1];
+	sprintf(command, "[ -f %s ]", path);
+	return !system(command);
+}
+
+int textFileExists(const char *fileName) {
+    FILE *f = fopen(fileName, "rb");
+    if (!f) return 0;
+    fclose(f);
+    return 1;
+}
+
 void writeLine(FILE *file, long line_number, const char *line) {
 	long count = 1;
 	char* newLine = "\n";
@@ -40,19 +53,6 @@ void printLine(FILE *file, long line_number) {
 	else
 		printf("Error. No such line\n");
 	return;
-}
-
-int fileExists(const char* path) {
-	char command[PATH_MAX + 1];
-	sprintf(command, "[ -f %s ]", path);
-	return !system(command);
-}
-
-int textFileExists(const char *fileName) {
-    FILE *f = fopen(fileName, "rb");
-    if (!f) return 0;
-    fclose(f);
-    return 1;
 }
 
 long getFileSize(const char *fileName) {
