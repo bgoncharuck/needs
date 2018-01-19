@@ -93,8 +93,8 @@
 	for(i = 0; i < size; i++) count[arr[i]]++; \
 	for(i = 1; i <= range; i++) count[i] += count[i - 1]; \
 	for(i = 0; i < size; i++) { \
-		tmp[count[arr[i]]-1] = arr[i]; \
 		count[arr[i]]--; \
+		tmp[count[arr[i]]] = arr[i]; \
 	} \
 	for(i = 0; i < size; i++) arr[i] = tmp[i]; \
 } while(0)
