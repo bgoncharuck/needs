@@ -1,5 +1,6 @@
 struct DoubleLinkedNode {
 	int data;
+	//double data;
 	struct DoubleLinkedNode* prev;
 	struct DoubleLinkedNode* next;
 };
@@ -12,15 +13,25 @@ struct DoubleLinkedList {
 };
 typedef struct DoubleLinkedList DL_list;
 
+bool DLList_constructor(DL_list* list) {
+	if(list != NULL) {
+		list->head = NULL;
+		list->tail = NULL;
+		list->size = 0;
+		return true;
+	}
+	return false;
+}
+
 DLNode* newDLNode(void) {
 		DLNode* res = malloc(sizeof(DLNode));
-		res->data = 0;
+		res->data = 0.0;
 		res->prev = NULL;
 		res->next = NULL;
 		return res;
 }
 
-DLNode* newDLNodeDat(int dat) {
+DLNode* newDLNodeDat(/*double*/ int dat) {
 		DLNode* res = malloc(sizeof(DLNode));
 		res->data = dat;
 		res->prev = NULL;
@@ -36,27 +47,6 @@ bool freeDLNode(DLNode* node) {
 	return false;
 }
 
-DLNode* remDLNodeInPos(DL_list* list, size_t POS) {
-	if(list->head == NULL || POS == 0 || list->size == 0)
-		return NULL;
-	else if(POS > list->size)
-		POS = list->size;
-	DLNode* toRem = list->head;
-	while(toRem != NULL && POS > 1) {
-		toRem = toRem->next;
-		POS--;
-	}
-	if (toRem->prev != NULL)
-		toRem->prev->next = toRem->next;
-	else
-		list->head = list->head->next;
-	if (toRem->next != NULL)
-		toRem->next->prev = toRem->prev;
-	list->size--;
-	return toRem;
-}
-
-// O(1)
 bool addFirstDLNode(DL_list* list, DLNode* node) {
 	if(node != NULL) {
 		node->prev = NULL;
@@ -75,11 +65,11 @@ bool addFirstDLNode(DL_list* list, DLNode* node) {
 bool addLastDLNode(DL_list* list, DLNode* node) {
 	if(node != NULL) {
 		node->next = NULL;
-		node->prev = list->tail;
 		if (list->tail != NULL)
 			list->tail->next = node;
-		list->size++;
+		node->prev = list->tail;
 		list->tail = node;
+		list->size++;
 		if(list->size == 1)
 			list->head = node;
 		return true;
@@ -105,4 +95,47 @@ DLNode* remLastDLNode(DL_list* list) {
 		return removed;
 	}
 	return NULL;
+}
+
+bool remFreeLastDLNode(DL_list* list) {
+	if(list->size > 0) {
+		list->size--;
+		DLNode* toFree = list->tail;
+		list->tail = list->tail->prev;
+		freeDLNode(toFree);
+		return true;
+	}
+	return false;
+}
+
+bool remFreeFirstDLNode(DL_list* list) {
+	if(list->size > 0) {
+		list->size--;
+		DLNode* toFree = list->head;
+		list->head = list->head->next;
+		freeDLNode(toFree);
+		return true;
+	}
+	return false;
+}
+
+bool swapDLNodes(DLNode* first, DLNode* second) {
+	if(first != NULL && second != NULL) {
+		DLNode* tempPrev = first->prev;
+		DLNode* tempNext = first->next;
+		first->prev = second->prev;
+		first->next = second->next;
+		second->prev = tempPrev;
+		second->next = tempNext;
+		return true;
+	}
+	return false;
+}
+
+bool freeDLList(DL_list* list) {
+	if(list != NULL) {
+		while(remFreeLastDLNode(list));
+		return true;
+	}
+	return false;
 }

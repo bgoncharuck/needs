@@ -98,3 +98,68 @@
 	} \
 	for(i = 0; i < size; i++) arr[i] = tmp[i]; \
 } while(0)
+
+void sortDLListDouble(DL_list* list) {
+	if(list->head == NULL)
+		return;
+	const size_t listSize = list->size;
+	typeof(list->head->data) unsorted[listSize];
+	DLNode* tempNode = NULL;
+	for(size_t i = 0; i < listSize; i++) {
+		tempNode = remFirstDLNode(list);
+		unsorted[i] = tempNode->data;
+		freeDLNode(tempNode);
+	}
+	sortComb(unsorted, listSize);
+	for(size_t i = 0; i < listSize; i++) {
+		tempNode = newDLNodeDat(unsorted[i]);
+		addLastDLNode(list, tempNode);
+	}
+	tempNode = NULL;
+}
+
+#define sortBucketDouble(arr, arraySize) do { \
+	DL_list buckets[arraySize]; \
+	DLNode* tempNode = NULL; \
+	for (size_t i = 0; i < arraySize; i++) \
+		DLList_constructor(&buckets[i]); \
+	for (size_t i = 0; i < arraySize; i++) { \
+		size_t j = (size_t) arraySize * arr[i]; \
+		DLNode* newNode = newDLNodeDat(arr[i]); \
+		addFirstDLNode(&buckets[j], newNode); \
+	} \
+	for (size_t i = 0; i < arraySize; i++) \
+		sortDLList(&buckets[i]); \
+	for (size_t i = 0, j = 0; i < arraySize; i++) { \
+		while (buckets[i].size > 0) { \
+			tempNode = remFirstDLNode(&buckets[i]); \
+			arr[j++] = tempNode->data; \
+			freeDLNode(tempNode); \
+		} \
+	} \
+} while(0)
+
+#define sortRadixLSD(arr, size, num, base) do { \
+	/* Sort the numbers beginning with least-significant digit */ \
+	/* pos = 1, 10, 100, 1000, ... */ \
+	for(size_t pos = 1; pos <= (size_t) pow(base, num); pos *= base) { \
+		typeof(arr[0]) res[size]; \
+		size_t count[base]; \
+		for(int i = 0 ; i < base; i++) count[i] = 0; \
+		/* counting sort */ \
+		for (size_t i = 0; i < size; i++) { \
+			res[i] = 0; \
+			size_t digit = (arr[i] / pos) % base; \
+			count[digit]++; \
+		} \
+		for (size_t i = 1; i < base; i++) \
+			count[i] += count[i - 1]; \
+		for (long i = size-1; i >= 0; i--) { \
+			size_t digit = (arr[i] / pos) % base; \
+			count[digit]--; \
+			res[count[digit]] = arr[i]; \
+		} \
+		for (size_t i = 0; i < size; i++) \
+			arr[i] = res[i]; \
+	} \
+} while(0)
