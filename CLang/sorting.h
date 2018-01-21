@@ -163,3 +163,25 @@ void sortDLListDouble(DL_list* list) {
 			arr[i] = res[i]; \
 	} \
 } while(0)
+
+void sortStringRadixLSD(char* str[], long size, long num) {
+	int english26 = 26;
+	char* tmp[size];
+	for (long pos = num - 1; pos >= 0; pos--) {
+		int count[english26];
+		for (int i = 0; i < size; i++) {
+			int key = tolower(str[i][pos]) - 'a'; // 97
+			count[key]++;
+		}
+		for (int i = 1; i < english26; i++)
+			count[i] += count[i - 1];
+		for (int i = size - 1; i >= 0; i--) {
+			int key = tolower(str[i][pos]) - 'a';
+			count[key]--;
+			tmp[count[key]] = str[i];
+		}
+		for (int i = 0; i < size; i++) {
+			str[i] = tmp[i];
+		}
+	}
+}
