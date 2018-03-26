@@ -1,3 +1,12 @@
+bool fileRemove(const char * path) {
+	if(fileExists(path)) {
+		char command[PATH_MAX + 1];
+		sprintf(command, "rm %s", path);
+		return system(command) == 0;
+	}
+	return false;
+}
+
 int fileExists(const char* path) {
 	char command[PATH_MAX + 1];
 	sprintf(command, "[ -f %s ]", path);

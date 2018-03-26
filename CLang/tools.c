@@ -1,6 +1,15 @@
 #define swapXOR(x,y) do {if(x!=y){*x = *x ^ *y; *y = *y ^ *x; *x = *x ^ *y;}} while(0)
 /*
 */
+
+
+#define ErrorMessage(MSG) do { \
+	fprintf(stderr, "%s\n", MSG); \
+	assert(0 && MSG); \
+	abort(); \
+} while(0)
+
+
 #define swap(x,y) do { \
 	typeof(*x) temp = *x; \
 	*x = *y; \
