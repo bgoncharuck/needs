@@ -20,6 +20,7 @@
 	for(i = 0; i < size; i++) arr[i] = tmp[i]; \
 } while(0)
 
+/* Needs list realization */
 void sortDLListDouble(DL_list* list) {
 	if(list->head == NULL)
 		return;
@@ -39,6 +40,8 @@ void sortDLListDouble(DL_list* list) {
 	tempNode = NULL;
 }
 
+
+/* Needs list realization */
 #define sortBucketDouble(arr, arraySize) do { \
 	DL_list buckets[arraySize]; \
 	DLNode* tempNode = NULL; \
