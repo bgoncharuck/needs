@@ -4,7 +4,7 @@
 
 #include <string_buffer.h>
 
-const int INITIAL_CAPACITY = 16;
+const int INITIAL_CAPACITY = 128;
 
 static char * strDup(const char *s) {
     char *d = malloc(strlen(s) + 1);   // Space for length plus nul
@@ -46,7 +46,7 @@ void StringBuffer_free(StringBuffer * self){
 }
 
 static void ensureCapacity(StringBuffer * self, int appendLength){
-     if(self->length + appendLength > self->capacity){
+if(self->length + appendLength > self->capacity){
         size_t newCapacity = self->capacity * 2;
         char * newBuffer = realloc(self->buffer, newCapacity * sizeof(char));
         if(!newBuffer)
@@ -71,6 +71,7 @@ void StringBuffer_append(StringBuffer * self, const char * str) {
 
 void StringBuffer_appendChar(StringBuffer * self, char ch) {
 	if(self) {
+		ensureCapacity(self, self->length);
 		self->buffer[self->length] = '\0';
 		self->buffer[self->length - 1] = ch;
 		self->length++;
@@ -91,5 +92,5 @@ void StringBuffer_clear(StringBuffer * self){
 char * StringBuffer_toNewString(StringBuffer * self) {
 	if(!self)
 		ErrorMessage("Error: NULL pointer in StringBuffer_toNewString()");
-    return strDup(self->buffer);
+  return strDup(self->buffer);
 }

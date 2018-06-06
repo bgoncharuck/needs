@@ -51,7 +51,7 @@ void CsvRow_add(CsvRow * self, const char * value){
 }
 
 void CsvRow_values(CsvRow * self, DynamicList * values){
-	if(self && values) {
+	if(self || self->value) {
 		DynamicList_CopyTo(self->value, values);
 		return;
 	}
@@ -85,7 +85,7 @@ void CsvTable_add (CsvTable * self, CsvRow * row) {
 
 
 void CsvTable_rows(CsvTable * self, DynamicList * rows) {
-	if(self && rows) {
+	if(self || self->rows) {
 		DynamicList_CopyTo(self->rows, rows);
 		return;
 	}
@@ -93,23 +93,23 @@ void CsvTable_rows(CsvTable * self, DynamicList * rows) {
 }
 
 CsvTable * CsvTable_newFromString(const char * csvString){
+
     if(!csvString)
         ErrorMessage("Error: NULL pointer in CsvTable_newFromString()");
 
     CsvTable * t = CsvTable_new();
     CsvRow * row = CsvRow_new();
 
-    StringBuffer * value = StringBuffer_new();
+		StringBuffer * value = StringBuffer_new();
     while(1){
         char ch = * csvString;
         if(ch == '\0'){
             char * newValue = StringBuffer_toNewString(value);
             CsvRow_add(row, newValue);
             StringBuffer_clear(value);
-            //
+						//
             CsvTable_add(t, row);
-            row = CsvRow_new();
-            break;
+						break;
         } else if(ch == '\n') {
             char * newValue = StringBuffer_toNewString(value);
             CsvRow_add(row, newValue);
@@ -127,6 +127,7 @@ CsvTable * CsvTable_newFromString(const char * csvString){
         csvString++;
     }
     StringBuffer_free(value);
+		// CsvRow_free(row);
     return t;
 }
 
@@ -135,15 +136,45 @@ char * CsvTable_toNewString  (CsvTable * self){
 		ErrorMessage("Error: NULL pointer in CsvTable_toNewString()");
 
 	StringBuffer * sb = StringBuffer_new();
-    foreach(CsvRow *, row, self->rows){
-        foreach(char * , value, row->value) {
-            StringBuffer_append(sb, value);
-        }
-    }
-    char * copy = StringBuffer_toNewString(sb);
-    StringBuffer_free(sb);
+  // foreach(CsvRow *, row, self->rows){
+  //     foreach(char * , value, row->value) {
+  //         StringBuffer_append(sb, value);
+  //     }
+  // }
 
-    return copy;
+
+	DynamicList * rows = DynamicList_new();
+	CsvTable_rows(self, rows);
+	int rowsCnt = DynamicList_count(rows);
+
+	for (int rowIndex = 0; rowIndex < rowsCnt; rowIndex++) {
+
+		CsvRow * row = (CsvRow*) DynamicList_at(rows, rowIndex);
+
+		DynamicList * values = DynamicList_new();
+		CsvRow_values(row, values);
+		int valuesCnt = DynamicList_count(values);
+
+		for (int valueIndex = 0; valueIndex < valuesCnt; valueIndex++) {
+			char * value = (char*) DynamicList_at(values,valueIndex);
+      StringBuffer_append(sb, value);
+			if (valueIndex < valuesCnt - 1)
+      	StringBuffer_append(sb, ",");
+			else if (rowIndex != rowsCnt - 1)
+      	StringBuffer_append(sb, "\n");
+		}
+		DynamicList_free(values);
+
+		if (rowIndex == rowsCnt - 1)
+			StringBuffer_append(sb, "\0");
+
+	}
+	DynamicList_free(rows);
+
+  char * copy = StringBuffer_toNewString(sb);
+  StringBuffer_free(sb);
+
+  return copy;
 }
 
 static void DynamicList_CopyTo(DynamicList *self, DynamicList *dest){

@@ -90,7 +90,7 @@ void sortDLListDouble(DL_list* list) {
 
 void sortStringRadixLSD(char* str[], long size, long num) {
 	int english26 = 26;
-	char* tmp[size];
+	char * tmp[size];
 	for (long pos = num - 1; pos >= 0; pos--) {
 		int count[english26];
 		for (int i = 0; i < size; i++) {
